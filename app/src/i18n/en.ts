@@ -1,4 +1,5 @@
 export default {
+  'meta.title': 'Angelo Cristian Sarbu - Full-Stack Developer (Backend, AI, Cloud)',
   'meta.description': 'Full-stack developer focused on backend, AI and Cloud (AWS) with experience in real environments. Portfolio of Angelo Cristian Sarbu.',
 
   'hero.greeting': "Hi, I'm",

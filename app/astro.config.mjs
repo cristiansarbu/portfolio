@@ -9,7 +9,15 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  integrations: [icon(), sitemap()],
+  integrations: [
+    icon(),
+    sitemap({
+      i18n: {
+        defaultLocale: 'es',
+        locales: { es: 'es-ES', en: 'en-US', de: 'de-DE' },
+      },
+    }),
+  ],
   i18n: {
     defaultLocale: 'es',
     locales: ['es', 'en', 'de'],

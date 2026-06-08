@@ -9,10 +9,12 @@ interface Props {
   lang: Locale;
   t: ReturnType<typeof useTranslations>;
 }
-const { title = 'Cristian Sarbu - Full Stack Developer', lang, t } = Astro.props;
+const { title, lang, t } = Astro.props;
 
+const pageTitle = title ?? t('meta.title');
 const description = t('meta.description');
 const canonicalUrl = Astro.url.href;
+const ogImage = new URL('/og-image.png', Astro.site).href;
 
 const siteBase = (Astro.site?.href ?? '').replace(/\/$/, '');
 const hreflangs = [
@@ -31,19 +33,48 @@ const ogLocale: Record<Locale, string> = {
 const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
+  '@id': `${siteBase}/#person`,
   name: 'Angelo Cristian Sarbu',
+  alternateName: 'Cristian Sarbu',
   jobTitle: t('hero.role'),
+  description,
   url: siteBase || undefined,
+  image: ogImage,
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Logroño',
     addressRegion: 'La Rioja',
     addressCountry: 'ES',
   },
+  knowsLanguage: ['es', 'ro', 'en', 'de'],
+  knowsAbout: [
+    'AWS', 'Docker', 'Docker Compose', 'Proxmox', 'vLLM', 'Nginx',
+    'PHP', 'Laravel', 'Slim', 'Node.js', 'Express', 'PostgreSQL', 'MySQL', 'Java',
+    'TypeScript', 'JavaScript', 'Angular', 'Tailwind CSS', 'Astro', 'Bash',
+    'Hexagonal Architecture', 'DDD', 'CQRS',
+  ],
+  alumniOf: {
+    '@type': 'EducationalOrganization',
+    name: 'C.P.C. Sagrado Corazón Jesuitas',
+  },
+  worksFor: {
+    '@type': 'Organization',
+    name: 'Arsys',
+  },
   sameAs: [
     'https://www.linkedin.com/in/angelo-cristian-sarbu/',
     'https://github.com/cristiansarbu',
   ],
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${siteBase}/#website`,
+  url: siteBase || undefined,
+  name: 'Angelo Cristian Sarbu',
+  inLanguage: lang,
+  publisher: { '@id': `${siteBase}/#person` },
 };
 ---
 
@@ -54,21 +85,27 @@ const personSchema = {
     <meta name="generator" content={Astro.generator} />
 
     <!-- Primary meta -->
-    <title>{title}</title>
+    <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
 
     <!-- Open Graph -->
-    <meta property="og:type"        content="website" />
-    <meta property="og:url"         content={canonicalUrl} />
-    <meta property="og:title"       content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:locale"      content={ogLocale[lang]} />
+    <meta property="og:type"         content="website" />
+    <meta property="og:url"          content={canonicalUrl} />
+    <meta property="og:title"        content={pageTitle} />
+    <meta property="og:description"  content={description} />
+    <meta property="og:locale"       content={ogLocale[lang]} />
+    <meta property="og:site_name"    content="Angelo Cristian Sarbu" />
+    <meta property="og:image"        content={ogImage} />
+    <meta property="og:image:width"  content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt"    content="Angelo Cristian Sarbu - Full-Stack Developer" />
 
     <!-- Twitter Card -->
-    <meta name="twitter:card"        content="summary" />
-    <meta name="twitter:title"       content={title} />
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content={pageTitle} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image"       content={ogImage} />
 
     <!-- hreflang alternates -->
     {hreflangs.map(({ hreflang, href }) => (
@@ -86,6 +123,7 @@ const personSchema = {
 
     <!-- Structured data -->
     <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
   </head>
   <body class="text-zinc-100 antialiased" style="font-family: var(--font-onest), sans-serif;">
     <Nav t={t} lang={lang} />

@@ -1,4 +1,5 @@
 export default {
+  'meta.title': 'Angelo Cristian Sarbu - Full-Stack-Entwickler (Backend, KI, Cloud)',
   'meta.description': 'Full-Stack-Entwickler mit Fokus auf Backend, KI und Cloud (AWS) mit Erfahrung in realen Umgebungen. Portfolio von Angelo Cristian Sarbu.',
 
   'hero.greeting': 'Hallo, ich bin',

@@ -1,0 +1,46 @@
+---
+---
+<dialog
+  id="lightbox"
+  class="fixed inset-0 z-50 m-0 h-full w-full max-h-none max-w-none bg-transparent p-0 backdrop:bg-black/80 backdrop:backdrop-blur-sm"
+>
+  <div class="flex h-full w-full items-center justify-center p-4">
+    <div id="lightbox-content" class="relative max-h-full max-w-full">
+      <img id="lightbox-img" src="" alt="" draggable="false" class="max-h-[90dvh] max-w-[90dvw] rounded-lg object-contain shadow-2xl select-none" />
+      <button
+        id="lightbox-close"
+        aria-label="Close image"
+        class="absolute -top-3 -right-3 flex h-8 w-8 items-center justify-center rounded-full bg-zinc-800 text-zinc-300 hover:bg-zinc-700 hover:text-white transition-colors shadow-lg"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const dialog   = document.getElementById('lightbox')         as HTMLDialogElement;
+  const img      = document.getElementById('lightbox-img')     as HTMLImageElement;
+  const closeBtn = document.getElementById('lightbox-close')   as HTMLButtonElement;
+
+  const openLightbox = () => {
+    document.body.classList.add('overflow-hidden');
+    dialog.showModal();
+  };
+  const closeLightbox = () => dialog.close();
+
+  document.querySelectorAll<HTMLButtonElement>('[data-lightbox]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      img.src = btn.dataset.lightbox!;
+      img.alt = btn.querySelector('img')?.alt ?? '';
+      img.decode().then(openLightbox).catch(openLightbox);
+    });
+  });
+
+  closeBtn.addEventListener('click', closeLightbox);
+  document.getElementById('lightbox-content')!.addEventListener('click', (e) => e.stopPropagation());
+  dialog.addEventListener('click', closeLightbox);
+  dialog.addEventListener('close', () => document.body.classList.remove('overflow-hidden'));
+</script>

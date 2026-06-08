@@ -1,0 +1,80 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { useTranslations } from '../i18n/utils';
+
+interface Props {
+  t: ReturnType<typeof useTranslations>;
+}
+const { t } = Astro.props;
+---
+
+<footer id="contact" class="reveal px-6 max-w-3xl mx-auto py-24">
+  <div class="h-px bg-gradient-to-r from-transparent via-zinc-800 to-transparent mb-16"></div>
+
+  <h2 class="text-3xl font-bold text-white mb-10">{t('contact.title')}</h2>
+
+  <div class="flex flex-wrap gap-6">
+    <div class="relative">
+      <button
+        type="button"
+        data-email-link
+        data-copied-text={t('hero.email_copied')}
+        aria-label="Copy email to clipboard"
+        class="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors cursor-pointer"
+      >
+        <Icon name="heroicons:envelope" class="w-[18px] h-[18px]" aria-hidden="true" />
+        {t('contact.email')}
+      </button>
+      <span
+        data-copied-toast
+        role="status"
+        aria-live="polite"
+        class="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-zinc-700 px-3 py-1 text-xs font-medium text-zinc-100 opacity-0 transition-opacity duration-200"
+      ></span>
+    </div>
+
+    <a
+      href="https://www.linkedin.com/in/angelo-cristian-sarbu/"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="LinkedIn profile (opens in new tab)"
+      class="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors"
+    >
+      <Icon name="simple-icons:linkedin" class="w-[18px] h-[18px]" aria-hidden="true" />
+      {t('contact.linkedin')}
+    </a>
+  </div>
+
+  <div class="mt-16 flex items-center justify-between gap-4">
+    <div>
+      <p class="text-xs text-zinc-400">Angelo Cristian Sarbu - <span id="footer-year">{new Date().getFullYear()}</span></p>
+      <script>document.getElementById('footer-year')!.textContent = String(new Date().getFullYear());</script>
+      <p class="text-xs text-zinc-400 mt-1 opacity-60">{t('contact.based_on')}</p>
+    </div>
+    <a href="#" class="text-xs text-zinc-400 hover:text-blue-400 transition-colors shrink-0">↑ Top</a>
+  </div>
+</footer>
+
+<script>
+  const user = 'angelocristiansarbu';
+  const domain = 'gmail.com';
+  document.querySelectorAll<HTMLElement>('[data-email-link]').forEach((button) => {
+    const toast = button.parentElement?.querySelector<HTMLElement>('[data-copied-toast]');
+    let hideTimeout: ReturnType<typeof setTimeout> | undefined;
+
+    button.addEventListener('click', async () => {
+      await navigator.clipboard.writeText(`${user}@${domain}`);
+
+      if (!toast) return;
+      toast.textContent = button.dataset.copiedText ?? 'Email copied';
+      toast.classList.remove('opacity-0');
+      toast.classList.add('opacity-100');
+
+      clearTimeout(hideTimeout);
+      hideTimeout = setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0');
+      }, 2000);
+    });
+  });
+</script>

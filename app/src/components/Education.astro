@@ -1,0 +1,61 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { useTranslations } from '../i18n/utils';
+
+interface Props {
+  t: ReturnType<typeof useTranslations>;
+}
+const { t } = Astro.props;
+
+const education = [
+  {
+    title: t('education.daw_title'),
+    institution: t('education.daw_institution'),
+    period: t('education.daw_period'),
+    details: [1,2,3,4,5,6,7,8].map(i => t(`education.daw_detail_${i}` as any)),
+  },
+  {
+    title: t('education.gendigital_title'),
+    institution: t('education.gendigital_institution'),
+    period: t('education.gendigital_period'),
+    details: [1,2,3,4,5,6,7].map(i => t(`education.gendigital_detail_${i}` as any)),
+  },
+  {
+    title: t('education.bachillerato_title'),
+    institution: t('education.bachillerato_institution'),
+    period: t('education.bachillerato_period'),
+    details: [],
+  },
+];
+---
+
+<section id="education" class="reveal px-6 max-w-3xl mx-auto py-24">
+  <h2 class="text-3xl font-bold text-white mb-12">{t('education.title')}</h2>
+
+  <div class="relative">
+    <!-- vertical line - left-4 = 16px = center of w-8 icon -->
+    <div class="absolute left-4 top-8 bottom-0 w-px bg-gradient-to-b from-zinc-600 via-zinc-700 to-transparent"></div>
+
+    <div class="flex flex-col gap-8">
+      {education.map((edu) => (
+        <div class="flex items-start gap-6">
+          <!-- icon badge -->
+          <div class="shrink-0 z-10 w-8 h-8 rounded-full bg-zinc-800 border border-zinc-600/60 flex items-center justify-center shadow-md shadow-zinc-950/40">
+            <Icon name="heroicons:calendar-solid" class="w-4 h-4 text-blue-400" />
+          </div>
+
+          <article class="flex-1 px-4 pb-4 rounded-lg hover:bg-zinc-900/50 transition-colors">
+            <h3 class="text-lg font-semibold text-white">{edu.title}</h3>
+            <span class="text-blue-400 text-sm font-medium">{edu.institution}</span>
+            <time class="block text-sm text-zinc-500 mt-1">{edu.period}</time>
+            {edu.details.length > 0 && (
+              <p class="mt-2 text-sm text-zinc-500 leading-relaxed">
+                {edu.details.join(' - ')}
+              </p>
+            )}
+          </article>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

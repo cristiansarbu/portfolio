@@ -1,0 +1,53 @@
+---
+import { Image } from 'astro:assets';
+import monte1 from '../assets/img/monte_1.jpg';
+import monte2 from '../assets/img/monte_2.jpg';
+import monte3 from '../assets/img/monte_3.jpg';
+import monte4 from '../assets/img/monte_4.jpg';
+import type { ImageMetadata } from 'astro';
+import type { useTranslations } from '../i18n/utils';
+
+interface Props {
+  t: ReturnType<typeof useTranslations>;
+}
+const { t } = Astro.props;
+
+const photos: { asset: ImageMetadata; alt: string; position?: string }[] = [
+  { asset: monte1, alt: t('hobbies.photo1_alt') },
+  { asset: monte2, alt: t('hobbies.photo2_alt'), position: 'center 70%' },
+  { asset: monte3, alt: t('hobbies.photo3_alt') },
+  { asset: monte4, alt: t('hobbies.photo4_alt') },
+];
+---
+
+<section id="hobbies" class="reveal px-6 max-w-3xl mx-auto py-24">
+  <h2 class="text-3xl font-bold text-white mb-4">{t('hobbies.title')}</h2>
+
+  <div class="mb-8">
+    <h3 class="text-lg font-semibold text-zinc-200 mb-3">{t('hobbies.hiking_title')}</h3>
+    <p class="text-sm text-zinc-300 leading-relaxed">{t('hobbies.hiking_desc')}</p>
+  </div>
+
+  <!-- 2×2 photo grid -->
+  <div class="grid grid-cols-2 gap-2">
+    {photos.map((p) => (
+      <button
+        type="button"
+        data-lightbox={p.asset.src}
+        aria-label={`View photo: ${p.alt}`}
+        class="relative rounded-xl overflow-hidden border border-zinc-800 group cursor-pointer"
+      >
+        <Image
+          src={p.asset}
+          alt={p.alt}
+          width={400}
+          class="w-full h-44 object-cover transition-transform duration-500 group-hover:scale-105"
+          style={p.position ? `object-position: ${p.position}` : undefined}
+          draggable={false}
+          loading="lazy"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+      </button>
+    ))}
+  </div>
+</section>

@@ -1,0 +1,40 @@
+---
+import type { useTranslations } from '../i18n/utils';
+import Hero from './Hero.astro';
+import Divider from './Divider.astro';
+import Experience from './Experience.astro';
+import Education from './Education.astro';
+import Projects from './Projects.astro';
+import Stack from './Stack.astro';
+import Certifications from './Certifications.astro';
+import Languages from './Languages.astro';
+import About from './About.astro';
+import Hobbies from './Hobbies.astro';
+import Footer from './Footer.astro';
+import Lightbox from './Lightbox.astro';
+
+interface Props {
+  t: ReturnType<typeof useTranslations>;
+}
+const { t } = Astro.props;
+---
+
+<Hero t={t} />
+<Divider />
+<Experience t={t} />
+<Divider />
+<Education t={t} />
+<Divider />
+<Projects t={t} />
+<Divider />
+<About t={t} />
+<Divider />
+<Stack t={t} />
+<Divider />
+<Certifications t={t} />
+<Divider />
+<Languages t={t} />
+<Divider />
+<Hobbies t={t} />
+<Footer t={t} />
+<Lightbox />

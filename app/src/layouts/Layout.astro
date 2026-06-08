@@ -1,0 +1,96 @@
+---
+import '../styles/global.css';
+import { Font } from 'astro:assets';
+import Nav from '../components/Nav.astro';
+import type { useTranslations, Locale } from '../i18n/utils';
+
+interface Props {
+  title?: string;
+  lang: Locale;
+  t: ReturnType<typeof useTranslations>;
+}
+const { title = 'Cristian Sarbu - Full Stack Developer', lang, t } = Astro.props;
+
+const description = t('meta.description');
+const canonicalUrl = Astro.url.href;
+
+const siteBase = (Astro.site?.href ?? '').replace(/\/$/, '');
+const hreflangs = [
+  { hreflang: 'es',        href: `${siteBase}/`     },
+  { hreflang: 'en',        href: `${siteBase}/en/`  },
+  { hreflang: 'de',        href: `${siteBase}/de/`  },
+  { hreflang: 'x-default', href: `${siteBase}/`     },
+];
+
+const ogLocale: Record<Locale, string> = {
+  es: 'es_ES',
+  en: 'en_US',
+  de: 'de_DE',
+};
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Angelo Cristian Sarbu',
+  jobTitle: t('hero.role'),
+  url: siteBase || undefined,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Logroño',
+    addressRegion: 'La Rioja',
+    addressCountry: 'ES',
+  },
+  sameAs: [
+    'https://www.linkedin.com/in/angelo-cristian-sarbu/',
+    'https://github.com/cristiansarbu',
+  ],
+};
+---
+
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary meta -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type"        content="website" />
+    <meta property="og:url"         content={canonicalUrl} />
+    <meta property="og:title"       content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale"      content={ogLocale[lang]} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card"        content="summary" />
+    <meta name="twitter:title"       content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- hreflang alternates -->
+    {hreflangs.map(({ hreflang, href }) => (
+      <link rel="alternate" hreflang={hreflang} href={href} />
+    ))}
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Font -->
+    <Font cssVariable="--font-onest" preload />
+
+    <!-- Structured data -->
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+  </head>
+  <body class="text-zinc-100 antialiased" style="font-family: var(--font-onest), sans-serif;">
+    <Nav t={t} lang={lang} />
+    <main id="top">
+      <slot />
+    </main>
+  </body>
+</html>

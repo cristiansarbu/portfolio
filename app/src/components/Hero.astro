@@ -1,0 +1,135 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import headBg from '../assets/img/head_background.png';
+import type { useTranslations } from '../i18n/utils';
+
+interface Props {
+  t: ReturnType<typeof useTranslations>;
+}
+const { t } = Astro.props;
+---
+
+<section class="min-h-screen flex flex-col justify-center px-6 max-w-3xl mx-auto py-24">
+  <!-- Profile photo — centered on mobile, inline on sm+ -->
+  <div class="flex justify-center sm:hidden mb-8">
+    <div class="w-32 h-32 rounded-full overflow-hidden bg-zinc-800 border-2 border-zinc-700">
+      <Image
+        src={headBg}
+        alt="Angelo Cristian Sarbu"
+        class="w-full h-full object-cover object-top scale-150 origin-top -translate-y-10 -translate-x-3"
+        loading="eager"
+        draggable={false}
+      />
+    </div>
+  </div>
+
+  <div class="flex items-center justify-between gap-8">
+
+    <!-- Text content -->
+    <div class="flex-1 min-w-0">
+      <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight mb-2">
+        <span class="text-white">{t('hero.greeting')} </span><span class="text-blue-400">Cristian</span>
+      </h1>
+
+      <h2 class="text-lg sm:text-xl font-semibold text-zinc-400 mb-2">
+        {t('hero.role')}
+      </h2>
+      <p class="flex items-center gap-1.5 text-sm text-zinc-500 mb-8">
+          <Icon name="heroicons:map-pin-solid" class="w-3.5 h-3.5" aria-hidden="true" />
+        Logroño, La Rioja
+      </p>
+
+      <p class="text-base sm:text-lg leading-relaxed max-w-xl mb-10">
+        <span class="text-blue-400">{t('hero.pitch_highlight')}</span>
+        {' '}
+        <span class="text-zinc-300">{t('hero.pitch_plain')}</span>
+      </p>
+
+      <!-- Social badges -->
+      <div class="flex flex-wrap gap-3">
+        <a
+          href="https://www.linkedin.com/in/angelo-cristian-sarbu/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="LinkedIn"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-800 border border-zinc-700 text-zinc-300 text-sm font-medium transition-transform hover:scale-105"
+        >
+          <Icon name="simple-icons:linkedin" class="w-4 h-4" aria-hidden="true" />
+          LinkedIn
+        </a>
+
+        <a
+          href="https://github.com/cristiansarbu"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-800 border border-zinc-700 text-zinc-300 text-sm font-medium transition-transform hover:scale-105"
+        >
+          <Icon name="simple-icons:github" class="w-4 h-4" aria-hidden="true" />
+          GitHub
+        </a>
+
+        <div class="relative">
+          <button
+            type="button"
+            data-email-link
+            data-copied-text={t('hero.email_copied')}
+            aria-label="Copy email to clipboard"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-800 border border-zinc-700 text-zinc-300 text-sm font-medium transition-transform hover:scale-105 min-w-0 cursor-pointer"
+          >
+            <Icon name="heroicons:envelope" class="w-4 h-4 shrink-0" aria-hidden="true" />
+            <svg viewBox="0 0 210 20" class="h-5 w-auto max-w-full" aria-hidden="true" focusable="false">
+              <text y="15" font-size="14" font-family="var(--font-onest), sans-serif" fill="currentColor">
+                <tspan>angelocristian</tspan><tspan>sarbu</tspan><tspan>@gmail</tspan><tspan>.com</tspan>
+              </text>
+            </svg>
+          </button>
+          <span
+            data-copied-toast
+            role="status"
+            aria-live="polite"
+            class="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-zinc-700 px-3 py-1 text-xs font-medium text-zinc-100 opacity-0 transition-opacity duration-200"
+          ></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile photo -->
+    <div class="flex-shrink-0 hidden sm:block">
+      <div class="w-40 h-40 rounded-full overflow-hidden bg-zinc-800 border-2 border-zinc-700">
+        <Image
+          src={headBg}
+          alt="Angelo Cristian Sarbu"
+          class="w-full h-full object-cover object-top scale-150 origin-top -translate-y-10 -translate-x-3"
+          loading="eager"
+          draggable={false}
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const user = 'angelocristiansarbu';
+  const domain = 'gmail.com';
+  document.querySelectorAll<HTMLElement>('[data-email-link]').forEach((button) => {
+    const toast = button.parentElement?.querySelector<HTMLElement>('[data-copied-toast]');
+    let hideTimeout: ReturnType<typeof setTimeout> | undefined;
+
+    button.addEventListener('click', async () => {
+      await navigator.clipboard.writeText(`${user}@${domain}`);
+
+      if (!toast) return;
+      toast.textContent = button.dataset.copiedText ?? 'Email copied';
+      toast.classList.remove('opacity-0');
+      toast.classList.add('opacity-100');
+
+      clearTimeout(hideTimeout);
+      hideTimeout = setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0');
+      }, 2000);
+    });
+  });
+</script>

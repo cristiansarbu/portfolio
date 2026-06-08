@@ -1,0 +1,29 @@
+---
+import type { useTranslations } from '../i18n/utils';
+
+interface Props {
+  t: ReturnType<typeof useTranslations>;
+}
+const { t } = Astro.props;
+
+const langs = [
+  { flag: '🇪🇸', code: 'ES', name: 'Español', level: t('languages.native') },
+  { flag: '🇷🇴', code: 'RO', name: 'Română', level: t('languages.native') },
+  { flag: '🇬🇧', code: 'GB', name: 'English', level: 'C2 (Cambridge)' },
+  { flag: '🇩🇪', code: 'DE', name: 'Deutsch', level: 'B2.2 (E.O.I.)' },
+];
+---
+
+<section id="languages" class="reveal px-6 max-w-3xl mx-auto py-24">
+  <h2 class="text-3xl font-bold text-white mb-12">{t('languages.title')}</h2>
+
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+    {langs.map((l) => (
+      <div class="flex flex-col items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 text-center hover:scale-105 transition-transform duration-200">
+        <span class="text-2xl font-bold text-blue-400">{l.code}</span>
+        <span class="font-semibold text-white text-sm">{l.name}</span>
+        <span class="text-xs text-zinc-300">{l.level}</span>
+      </div>
+    ))}
+  </div>
+</section>

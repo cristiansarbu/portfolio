@@ -1,0 +1,120 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import seom1       from '../assets/img/seom_1.png';
+import agentes1    from '../assets/img/agentes.png';
+import spainskills1 from '../assets/img/spainskills_1.jpg';
+import spainskills2 from '../assets/img/spainskills_2.jpg';
+import programame1  from '../assets/img/programame_1.jpg';
+import programame2  from '../assets/img/programame_2.jpg';
+import type { ImageMetadata } from 'astro';
+import type { useTranslations } from '../i18n/utils';
+
+interface Props {
+  t: ReturnType<typeof useTranslations>;
+}
+const { t } = Astro.props;
+
+interface ProjectImage {
+  asset: ImageMetadata;
+  alt: string;
+  position?: string;
+}
+
+const projects: { title: string; desc: string; tags: string[]; link: string | null; images: ProjectImage[] }[] = [
+  {
+    title: t('projects.fdp_title'),
+    desc: t('projects.fdp_desc'),
+    tags: ['Angular 20', 'Laravel 12', 'MySQL', 'Docker'],
+    link: null,
+    images: [
+      { asset: seom1, alt: 'Proyecto Fin de Grado - plataforma de evaluaciones 360°' },
+    ],
+  },
+  {
+    title: t('projects.agentes_title'),
+    desc: t('projects.agentes_desc'),
+    tags: ['Figma', 'Diseño', 'Email Design'],
+    link: null,
+    images: [
+      { asset: agentes1, alt: 'Correo informativo - curso Agentes del Cambio', position: 'object-top' },
+    ],
+  },
+  {
+    title: t('projects.spainskills_title'),
+    desc: t('projects.spainskills_desc'),
+    tags: ['AWS', 'Cloud', 'Networking', 'AI/ML'],
+    link: null,
+    images: [
+      { asset: spainskills1, alt: 'SpainSkills 2026 - competition floor' },
+      { asset: spainskills2, alt: 'SpainSkills 2026 - AWS challenge' },
+    ],
+  },
+  {
+    title: t('projects.programame_title'),
+    desc: t('projects.programame_desc'),
+    tags: ['Java', 'Algorithms', 'Data Structures'],
+    link: null,
+    images: [
+      { asset: programame1, alt: 'ProgramaMe 2025 - regional phase' },
+      { asset: programame2, alt: 'ProgramaMe - team competing' },
+    ],
+  },
+];
+---
+
+<section id="projects" class="reveal px-6 max-w-3xl mx-auto py-24">
+  <h2 class="text-3xl font-bold text-white mb-12">{t('projects.title')}</h2>
+
+  <div class="flex flex-col gap-5">
+    {projects.map((p) => (
+      <article class="relative flex flex-col sm:flex-row rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden">
+
+        <!-- text -->
+        <div class="flex flex-col justify-between gap-4 p-6 flex-1 min-w-0">
+          <div class="flex items-start justify-between gap-3">
+            <h3 class="font-semibold text-white text-lg leading-snug">{p.title}</h3>
+            {p.link && (
+              <a href={p.link} target="_blank" rel="noopener noreferrer" aria-label="View project"
+                class="text-zinc-500 hover:text-white transition-colors shrink-0 mt-0.5">
+                <Icon name="heroicons:arrow-top-right-on-square" class="w-4 h-4" aria-hidden="true" />
+              </a>
+            )}
+          </div>
+
+          <p class="text-sm text-zinc-400 leading-relaxed">{p.desc}</p>
+
+          <div class="flex flex-wrap gap-1.5">
+            {p.tags.map((tag) => (
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-zinc-800/80 text-zinc-300 border border-zinc-700/50">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <!-- images -->
+        {p.images.length > 0 && (
+          <div class="flex sm:w-56 shrink-0 gap-0.5 overflow-hidden">
+            {p.images.map((img) => (
+              <button
+                type="button"
+                data-lightbox={img.asset.src}
+                aria-label={`View full image: ${img.alt}`}
+                class="relative flex-1 h-36 sm:h-auto overflow-hidden cursor-pointer group/img"
+              >
+                <Image
+                  src={img.asset}
+                  alt={img.alt}
+                  class={`absolute inset-0 w-full h-full object-cover ${img.position ?? 'object-center'} transition-all duration-500 sm:brightness-70 sm:group-hover/img:brightness-100 sm:group-hover/img:scale-105`}
+                  loading="lazy"
+                  draggable={false}
+                />
+              </button>
+            ))}
+          </div>
+        )}
+      </article>
+    ))}
+  </div>
+</section>

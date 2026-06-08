@@ -1,0 +1,74 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { useTranslations } from '../i18n/utils';
+
+interface Props {
+  t: ReturnType<typeof useTranslations>;
+}
+const { t } = Astro.props;
+
+const jobs = [
+  {
+    company: 'Arsys',
+    role: t('experience.arsys_role1'),
+    period: t('experience.arsys_period1'),
+    bullets: [
+      t('experience.arsys_bullet1_1'),
+      t('experience.arsys_bullet1_2'),
+      t('experience.arsys_bullet1_3'),
+      t('experience.arsys_bullet1_4'),
+      t('experience.arsys_bullet1_5'),
+    ],
+  },
+  {
+    company: 'Arsys',
+    role: null,
+    period: t('experience.arsys_period2'),
+    bullets: [
+      t('experience.arsys_bullet2_1'),
+      t('experience.arsys_bullet2_2'),
+    ],
+  },
+];
+---
+
+<section id="experience" class="reveal px-6 max-w-3xl mx-auto py-24">
+  <h2 class="text-3xl font-bold text-white mb-12">{t('experience.title')}</h2>
+
+  <div class="relative">
+    <!-- vertical line - left-4 = 16px = center of w-8 icon -->
+    <div class="absolute left-4 top-8 bottom-0 w-px bg-gradient-to-b from-zinc-600 via-zinc-700 to-transparent"></div>
+
+    <div class="flex flex-col gap-10">
+      {jobs.map((job) => (
+        <div class="flex items-start gap-6">
+          <!-- icon badge -->
+          <div class="shrink-0 z-10 w-8 h-8 rounded-full bg-zinc-800 border border-zinc-600/60 flex items-center justify-center shadow-md shadow-zinc-950/40">
+            <Icon name="heroicons:calendar-solid" class="w-4 h-4 text-blue-400" />
+          </div>
+
+          <article class="flex-1 px-4 pb-4 rounded-lg hover:bg-zinc-900/50 transition-colors">
+            <div class="flex flex-wrap items-baseline justify-between gap-2 mb-3">
+              <div>
+                {job.role && <h3 class="text-lg font-semibold text-white">{job.role}</h3>}
+                <span class="text-blue-400 text-sm font-medium">{job.company}</span>
+              </div>
+              <time class="text-sm text-zinc-500 shrink-0">{job.period}</time>
+            </div>
+
+            <ul class="space-y-2">
+              {job.bullets.map((bullet) => (
+                <li class="flex items-start gap-3 text-zinc-400 text-sm leading-relaxed">
+                  <svg class="shrink-0 mt-[6px] text-blue-500" width="10" height="10" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true">
+                    <polygon points="2,1 8,5 2,9" />
+                  </svg>
+                  {bullet}
+                </li>
+              ))}
+            </ul>
+          </article>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

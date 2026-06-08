@@ -1,0 +1,119 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { useTranslations } from '../i18n/utils';
+
+interface Props {
+  t: ReturnType<typeof useTranslations>;
+}
+const { t } = Astro.props;
+
+interface Cert {
+  title: string;
+  issuer: string;
+  date?: string;
+  desc: string;
+  icon: string;
+  iconColor: string;
+  borderColor: string;
+  url?: string;
+  pdf?: string;
+  inProgress?: boolean;
+  progress?: number;
+}
+
+const certs: Cert[] = [
+  {
+    title: t('certs.aws_cq_title'),
+    issuer: 'Amazon Web Services (AWS)',
+    date: t('certs.aws_cq_date'),
+    desc: t('certs.aws_cq_desc'),
+    icon: 'simple-icons:amazonwebservices',
+    iconColor: '#FF9900',
+    borderColor: '#FF9900',
+    url: 'https://www.credly.com/badges/5c8b7af9-c173-4eef-851e-7e37e1d996bd',
+  },
+  {
+    title: t('certs.docker_title'),
+    issuer: 'Docker, Inc',
+    date: t('certs.docker_date'),
+    desc: t('certs.docker_desc'),
+    icon: 'simple-icons:docker',
+    iconColor: '#2496ED',
+    borderColor: '#3b82f6',
+    pdf: '/docker-foundations-certificate.pdf',
+  },
+  {
+    title: t('certs.aws_sa_title'),
+    issuer: 'Amazon Web Services (AWS)',
+    desc: t('certs.aws_sa_desc'),
+    icon: 'simple-icons:amazonwebservices',
+    iconColor: '#FF9900',
+    borderColor: '#f59e0b',
+    inProgress: true,
+    progress: 40,
+  },
+];
+---
+
+<section id="certs" class="reveal px-6 max-w-3xl mx-auto py-24">
+  <h2 class="text-3xl font-bold text-white mb-10">{t('certs.title')}</h2>
+
+  <div class="flex flex-col gap-4">
+    {certs.map((cert) => (
+      <div
+        class="flex items-start gap-5 border border-zinc-700/50 bg-zinc-900/60 p-6 overflow-hidden"
+        style={`border-left: 3px solid ${cert.borderColor};`}
+      >
+
+        {/* Icon */}
+        <div class="flex-shrink-0 flex items-center justify-center self-center w-16">
+          <Icon name={cert.icon} class="w-12 h-12" style={`color: ${cert.iconColor}`} />
+        </div>
+
+        {/* Content */}
+        <div class="flex-1 min-w-0">
+          <h3 class="text-base font-bold text-white leading-snug mb-1">{cert.title}</h3>
+
+          <p class="text-sm text-zinc-400 mb-3">
+            {cert.issuer}{cert.date ? ` - ${cert.date}` : ''}
+          </p>
+
+          <p class="text-sm text-zinc-400 leading-relaxed mb-4">{cert.desc}</p>
+
+          {cert.inProgress && (
+            <div class="px-4 py-2.5 mb-4 rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-400 text-sm">
+              {t('certs.in_progress')}
+            </div>
+          )}
+
+          {/* Links */}
+          {(cert.url || cert.pdf) && (
+            <div class="flex flex-wrap gap-4">
+              {cert.url && (
+                <a
+                  href={cert.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1.5 text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors duration-200"
+                >
+                  {t('certs.show_credential')}
+                  <Icon name="heroicons:arrow-top-right-on-square" class="w-3.5 h-3.5" aria-hidden="true" />
+                </a>
+              )}
+              {cert.pdf && (
+                <a
+                  href={cert.pdf}
+                  download
+                  class="inline-flex items-center gap-1.5 text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors duration-200"
+                >
+                  {t('certs.download_pdf')}
+                  <Icon name="heroicons:arrow-down-tray" class="w-3.5 h-3.5" aria-hidden="true" />
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

@@ -34,7 +34,9 @@ const navLinks = [
 <header data-home-path={homePath} class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-zinc-950/80 border-b border-zinc-800/50 shadow-lg shadow-zinc-950/50">
   <div class="mx-auto px-4 max-w-3xl flex items-center justify-between py-4">
 
-    <Image src={logo} alt="ACS." class="h-8 w-auto flex-shrink-0" draggable={false} />
+    <a href="#top" id="logo-link" aria-label="Back to top">
+      <Image src={logo} alt="ACS." class="h-8 w-auto flex-shrink-0" draggable={false} />
+    </a>
 
     <!-- Desktop nav -->
     <nav class="hidden sm:flex items-center gap-6 text-sm text-zinc-400" aria-label="Primary navigation">
@@ -168,6 +170,12 @@ const navLinks = [
 
   toggle.addEventListener('click', () => {
     menu.classList.contains('hidden') ? openMenu() : closeMenu();
+  });
+
+  document.getElementById('logo-link')!.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    history.replaceState(null, '', location.pathname);
   });
 
   document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((anchor) => {

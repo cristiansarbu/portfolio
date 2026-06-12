@@ -124,6 +124,16 @@ const websiteSchema = {
     <!-- Structured data -->
     <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+
+    <!-- Arm scroll-reveal animations only when the user scrolls, so
+         non-scrolling renderers (Googlebot) always see the content. -->
+    <script is:inline>
+      addEventListener(
+        'scroll',
+        () => document.documentElement.classList.add('can-reveal'),
+        { once: true, passive: true }
+      );
+    </script>
   </head>
   <body class="text-zinc-100 antialiased" style="font-family: var(--font-onest), sans-serif;">
     <Nav t={t} lang={lang} />

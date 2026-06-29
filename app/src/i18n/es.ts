@@ -37,6 +37,8 @@ export default {
   'projects.agentes_desc': 'Conceptualización visual y diseño de estructura en Figma. Maquetación del correo realizada combinando HTML e imágenes para asegurar una visualización óptima en cualquier cliente de correo (como Gmail o Outlook), evitando problemas de compatibilidad con los estilos.',
   'projects.spainskills_title': 'SpainSkills 2026 - Cloud Computing',
   'projects.spainskills_desc': 'Competidor nacional representando La Rioja (IFEMA). Escenarios reales de AWS: Well-Architected, alta disponibilidad, networking e IA/ML con DeepRacer.',
+  'projects.awsjam_title': 'AWS Jam Nacional 2026 - Barcelona (7.º Puesto de 27 Equipos)',
+  'projects.awsjam_desc': 'Final nacional del AWS Jam, organizada por el Institut TIC de Barcelona en colaboración con Amazon Web Services. Resolución de escenarios reales de troubleshooting, seguridad, diseño Well-Architected y alta disponibilidad (EC2, VPC, IAM, DynamoDB, ECR, ALB, CI/CD) bajo presión de tiempo, compitiendo en equipo junto a compañeros de clase. Finalizamos en 7.º puesto de 27 equipos a nivel nacional tras una fase clasificatoria online.',
   'projects.programame_title': 'ProgramaMe 2025 & 2026',
   'projects.programame_desc': '3.º puesto regional 2025 (Zaragoza) con clasificación a la fase nacional en la UCM. 4.º puesto regional 2026. Algoritmos y estructuras de datos en Java.',
 

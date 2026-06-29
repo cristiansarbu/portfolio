@@ -37,6 +37,8 @@ export default {
   'projects.agentes_desc': 'Brainstorming and structure design in Figma. Email layout built combining HTML and images to ensure optimal display across any email client (such as Gmail or Outlook), avoiding style compatibility issues.',
   'projects.spainskills_title': 'SpainSkills 2026 - Cloud Computing',
   'projects.spainskills_desc': 'National competitor representing La Rioja (IFEMA). Real AWS scenarios: Well-Architected, high availability, networking and AI/ML with DeepRacer.',
+  'projects.awsjam_title': 'National AWS Jam 2026 - Barcelona (7th Place out of 27 Teams)',
+  'projects.awsjam_desc': 'National final of the AWS Jam, organised by Institut TIC de Barcelona in collaboration with Amazon Web Services. Solved real-world troubleshooting, security, Well-Architected design and high availability scenarios (EC2, VPC, IAM, DynamoDB, ECR, ALB, CI/CD) under time pressure, competing as a team with classmates. We finished 7th out of 27 teams nationwide after an online qualifying round.',
   'projects.programame_title': 'ProgramaMe 2025 & 2026',
   'projects.programame_desc': '3rd place regional 2025 (Zaragoza) with qualification to the national phase at the Universidad Complutense de Madrid. 4th place regional 2026. Algorithm and data structure problems in Java.',
 

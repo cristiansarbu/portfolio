@@ -23,6 +23,24 @@ interface Cert {
 
 const certs: Cert[] = [
   {
+    title: t('certs.aws_sa_title'),
+    issuer: 'Amazon Web Services (AWS)',
+    date: t('certs.aws_sa_date'),
+    desc: t('certs.aws_sa_desc'),
+    icon: 'simple-icons:amazonwebservices',
+    iconColor: '#FF9900',
+    borderColor: '#FF9900',
+  },
+  {
+    title: t('certs.azure_title'),
+    issuer: 'Microsoft',
+    date: t('certs.azure_date'),
+    desc: t('certs.azure_desc'),
+    icon: 'simple-icons:microsoftazure',
+    iconColor: '#0078D4',
+    borderColor: '#0078D4',
+  },
+  {
     title: t('certs.aws_cq_title'),
     issuer: 'Amazon Web Services (AWS)',
     date: t('certs.aws_cq_date'),
@@ -41,16 +59,6 @@ const certs: Cert[] = [
     iconColor: '#2496ED',
     borderColor: '#3b82f6',
     pdf: '/docker-foundations-certificate.pdf',
-  },
-  {
-    title: t('certs.aws_sa_title'),
-    issuer: 'Amazon Web Services (AWS)',
-    desc: t('certs.aws_sa_desc'),
-    icon: 'simple-icons:amazonwebservices',
-    iconColor: '#FF9900',
-    borderColor: '#f59e0b',
-    inProgress: true,
-    progress: 40,
   },
 ];
 ---

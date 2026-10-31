@@ -9,6 +9,12 @@ const { t } = Astro.props;
 
 const jobs = [
   {
+    company: 'Almato Iberia',
+    role: t('experience.almato_role'),
+    period: t('experience.almato_period'),
+    bullets: [],
+  },
+  {
     company: 'Arsys',
     role: t('experience.arsys_role1'),
     period: t('experience.arsys_period1'),
@@ -56,6 +62,7 @@ const jobs = [
               <time class="text-sm text-zinc-500 shrink-0">{job.period}</time>
             </div>
 
+            {job.bullets.length > 0 && (
             <ul class="space-y-2">
               {job.bullets.map((bullet) => (
                 <li class="flex items-start gap-3 text-zinc-400 text-sm leading-relaxed">
@@ -66,6 +73,7 @@ const jobs = [
                 </li>
               ))}
             </ul>
+            )}
           </article>
         </div>
       ))}
